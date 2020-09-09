@@ -3,3 +3,5 @@ Import-Package: \
     javassist.util.proxy,\
     *
 Meta-Persistence: META-INF/persistence.xml
+
+Export-Package: br.ufba.dcc.wiser.m2db.service

@@ -1,0 +1,1 @@
+Export-Package: br.ufba.dcc.wiser.m2db.*,
