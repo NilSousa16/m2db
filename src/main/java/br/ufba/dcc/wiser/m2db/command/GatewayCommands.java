@@ -1,5 +1,7 @@
 package br.ufba.dcc.wiser.m2db.command;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -15,20 +17,19 @@ public class GatewayCommands {
 
 	@Reference
 	private GatewayServiceDB gatewayServiceDB;
+	
+	SimpleDateFormat form = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
 	public void add(String mac, String ip, String manufacturer, String hostName) {
-		Gateway gateway = new Gateway(mac, ip, manufacturer, hostName, true);
-		
-		gatewayServiceDB.add(gateway);
-		
-		System.out.println("Add gateway \nMac: " + gateway.getMac() + "\nIp: " + gateway.getIp() + "\nManufacturer: " + gateway.getManufacturer() + "\nHostName: "
-				+ gateway.getHostName() + "\nStatus: " + gateway.isStatus());
+		Gateway gateway = new Gateway(mac, ip, manufacturer, hostName, true, Calendar.getInstance());
+		gatewayServiceDB.add(gateway);		
 	}
 
 	public void update(String mac, String ip, String manufacturer, String hostName, boolean status) {
+		Calendar date = Calendar.getInstance();
 		
-		if(gatewayServiceDB.find(mac) != null) {
-			Gateway gateway = new Gateway(mac, ip, manufacturer, hostName, status);
+		if (gatewayServiceDB.find(mac) != null) {
+			Gateway gateway = new Gateway(mac, ip, manufacturer, hostName, status, date);
 			gatewayServiceDB.update(gateway);
 			System.out.println("Update of id " + mac + " performed successfully.");
 		} else {
@@ -37,8 +38,7 @@ public class GatewayCommands {
 	}
 
 	public void delete(String mac) {
-		
-		if(gatewayServiceDB.find(mac) != null) {
+		if (gatewayServiceDB.find(mac) != null) {
 			gatewayServiceDB.delete(mac);
 			System.out.println("Delete of id " + mac + " performed successfully.");
 		} else {
@@ -48,12 +48,12 @@ public class GatewayCommands {
 
 	public void find(String mac) {
 		Gateway gateway = gatewayServiceDB.find(mac);
-		
-		if(gateway != null) {
-			System.out.println("--------- Information found ---------");
-			System.out.println("MAC, IP, MANUFACTURER, HOSTNAME, STATUS");
+
+		if (gateway != null) {
+			System.out.println("--------- Information Found ---------");
+			System.out.println("MAC, IP, MANUFACTURER, HOSTNAME, STATUS, UPDATE");
 			System.out.println(gateway.getMac() + ", " + gateway.getIp() + ", " + gateway.getManufacturer() + ", "
-					+ gateway.getHostName() + ", " + gateway.isStatus());
+					+ gateway.getHostName() + ", " + gateway.isStatus() + ", " + form.format(gateway.getDate().getTime()));
 		} else {
 			System.out.println("Register not found");
 		}
@@ -61,14 +61,17 @@ public class GatewayCommands {
 
 	public void list() {
 		List<Gateway> listGateway = gatewayServiceDB.list();
-		
-		if(!listGateway.isEmpty()) {
+
+		if (!listGateway.isEmpty()) {
 			System.out.println("--------- List of Gateways ---------");
-			System.out.println("MAC, IP, MANUFACTURER, HOSTNAME, STATUS");
+			System.out.println("MAC, IP, MANUFACTURER, HOSTNAME, STATUS, UPDATE");
 			for (Gateway gateway : listGateway) {
 				System.out.println(gateway.getMac() + ", " + gateway.getIp() + ", " + gateway.getManufacturer() + ", "
-						+ gateway.getHostName() + ", " + gateway.isStatus());
+						+ gateway.getHostName() + ", " + gateway.isStatus() + ", " + form.format(gateway.getDate().getTime()));
+				
 			}
+			
+			
 		} else {
 			System.out.println("No information stored");
 		}
