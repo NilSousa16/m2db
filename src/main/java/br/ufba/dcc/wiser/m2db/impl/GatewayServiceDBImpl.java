@@ -23,7 +23,7 @@ public class GatewayServiceDBImpl implements GatewayServiceDB {
 
 	@Activate
 	public void startOSGI() {
-		System.out.println("Started DS in the M2DB...");
+		System.out.println("Started DS in the M2DB - GatewayServiceDBImpl...");
 	}
 
 	@Reference(target = "(osgi.unit.name=person)")
