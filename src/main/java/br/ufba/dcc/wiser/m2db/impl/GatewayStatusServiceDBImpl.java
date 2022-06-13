@@ -33,7 +33,15 @@ public class GatewayStatusServiceDBImpl implements GatewayStatusServiceDB {
 			em.flush();
 		});
 	}
-
+	
+	@Override
+	public List<GatewayStatus> findByMac(String mac) {
+		return jpa.txExpr(
+				em -> em.createQuery("select g from GatewayStatus g where g.gateway.mac = :macGateway", GatewayStatus.class)
+						.setParameter("macGateway", mac).getResultList()
+		);
+	}
+	/*
 	@Override
 	public List<GatewayStatus> findByMac(String mac) {
 		return jpa.txExpr(
@@ -41,7 +49,7 @@ public class GatewayStatusServiceDBImpl implements GatewayStatusServiceDB {
 						"select g from GatewayStatus g where g.gateway.mac = " + mac, GatewayStatus.class).getResultList()
 				);
 	}
-
+	*/
 	@Override
 	public List<GatewayStatus> getListAll() {
 		return jpa.txExpr(em -> em.createQuery("select g from GatewayStatus g", GatewayStatus.class).getResultList());
