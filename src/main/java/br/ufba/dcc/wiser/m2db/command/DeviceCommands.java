@@ -18,12 +18,23 @@ import br.ufba.dcc.wiser.m2model.model.Device;
 	})
 public class DeviceCommands {
 	
+	/*
+	 * Para o git: m2server / m2db
+	 * 
+		fot-device:add - ok
+		fot-device:update - error (java.lang.NullPointerException)
+		fot-device:delete - ok
+		fot-device:find - ok
+		fot-device:list - ok
+	 */
+	
 	@Reference
 	private DeviceServiceDB deviceServiceDB;
 	
 	SimpleDateFormat form = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
-	public void add(String id, String location, String description, String typeSensor, Boolean status, String macGateway) {
+	public void add(String id, String location, String description, String typeSensor, 
+			Boolean status, String macGateway) {
 		Device device = new Device(location, description, typeSensor, status, Calendar.getInstance(), macGateway);
 		device.setId(id);
 		deviceServiceDB.add(device);	
@@ -32,14 +43,19 @@ public class DeviceCommands {
 	public void update(String id, String location, Boolean status, String macGateway) {
 		Calendar date = Calendar.getInstance();
 		
-		if (deviceServiceDB.find(id) != null) {
+		Device deviceSearched = deviceServiceDB.find(id);
+		
+		if (deviceSearched != null) {
 			Device device = new Device();
 			
-			// typeSensor and description not included because never change			
 			device.setId(id);
 			device.setLocation(location);
 			device.setDate(date);
 			device.setStatus(status);
+			// typeSensor and description not included because never change	
+			device.setTypeSensor(deviceSearched.getTypeSensor());
+			device.setDescription(deviceSearched.getDescription());
+			
 			device.getGateway().setMac(macGateway);
 			
 			deviceServiceDB.update(device);
@@ -68,9 +84,9 @@ public class DeviceCommands {
 					"IDDEVICE\tLOCATION\tDESCRIPTION\tTYPESENSOR\tSTATUS\tTIMESTAMP\tGATEWAY"
 			);
 			System.out.println(
-					device.getId() + " - " + device.getLocation() + " - " + 
-					device.getDescription() + " - " + device.getTypeSensor() + " - " + 
-					device.getStatus() + " - " + form.format(device.getDate().getTime()) + " - " + 
+					device.getId() + " \t " + device.getLocation() + " \t " + 
+					device.getDescription() + " \t " + device.getTypeSensor() + " \t " + 
+					device.getStatus() + " \t " + form.format(device.getDate().getTime()) + " \t " + 
 					device.getGateway().getMac()
 			);
 			
@@ -89,9 +105,9 @@ public class DeviceCommands {
 			);
 			for (Device device : deviceGateway) {
 				System.out.println(
-						device.getId() + " - " + device.getLocation() + " - " + 
-						device.getDescription() + " - " + device.getTypeSensor() + " - " + 
-						device.getStatus() + " - " + form.format(device.getDate().getTime()) + " - " + 
+						device.getId() + " \t " + device.getLocation() + " \t " + 
+						device.getDescription() + " \t " + device.getTypeSensor() + " \t " + 
+						device.getStatus() + " \t " + form.format(device.getDate().getTime()) + " \t " + 
 						device.getGateway().getMac()
 				);
 			}

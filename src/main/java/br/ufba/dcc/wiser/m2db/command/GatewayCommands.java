@@ -68,10 +68,7 @@ public class GatewayCommands {
 			for (Gateway gateway : listGateway) {
 				System.out.println(gateway.getMac() + ", " + gateway.getIp() + ", " + gateway.getManufacturer() + ", "
 						+ gateway.getHostName() + ", " + gateway.isStatus() + ", " + form.format(gateway.getDate().getTime()));
-				
 			}
-			
-			
 		} else {
 			System.out.println("No information stored");
 		}

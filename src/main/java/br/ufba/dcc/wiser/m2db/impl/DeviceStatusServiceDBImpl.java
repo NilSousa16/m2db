@@ -4,18 +4,20 @@ import java.util.List;
 
 import org.apache.aries.jpa.template.JpaTemplate;
 import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 import br.ufba.dcc.wiser.m2db.service.DeviceStatusServiceDB;
 import br.ufba.dcc.wiser.m2model.model.DeviceStatus;
 
+@Component
 public class DeviceStatusServiceDBImpl implements DeviceStatusServiceDB{
 
 	private JpaTemplate jpa;
 
 	@Activate
 	public void startOSGI() {
-		System.out.println("Started DS in the M2DB - GatewayStatusServiceDBImpl...");
+		System.out.println("Started DS in the M2DB - DeviceStatusServiceDBImpl...");
 	}
 
 	@Reference(target = "(osgi.unit.name=person)")
