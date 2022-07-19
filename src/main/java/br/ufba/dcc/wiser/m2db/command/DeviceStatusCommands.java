@@ -38,7 +38,7 @@ public class DeviceStatusCommands {
 			System.out.println("--------- List of Devices Status ---------");
 			System.out.println("IDDEVICE\tSITUATION\tTIMESTAMP");
 			for (DeviceStatus deviceStatus : listDeviceStatusById) {
-				System.out.println(deviceStatus.getDevice().getId() + " - " + deviceStatus.getSituation() + " - "
+				System.out.println(deviceStatus.getDevice().getId() + "\t" + deviceStatus.getSituation() + "\t"
 						+ form.format(deviceStatus.getDate().getTime()));
 			}
 		} else {
@@ -53,7 +53,7 @@ public class DeviceStatusCommands {
 			System.out.println("--------- List of Devices Status ---------");
 			System.out.println("IDDEVICE\tSITUATION\tTIMESTAMP");
 			for (DeviceStatus deviceStatus : listDeviceStatus) {
-				System.out.println(deviceStatus.getDevice().getId() + " - " + deviceStatus.getSituation() + ", "
+				System.out.println(deviceStatus.getDevice().getId() + "\t" + deviceStatus.getSituation() + "\t"
 						+ form.format(deviceStatus.getDate().getTime()));
 			}
 		} else {

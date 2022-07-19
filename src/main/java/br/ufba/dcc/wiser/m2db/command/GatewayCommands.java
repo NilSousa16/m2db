@@ -17,17 +17,17 @@ public class GatewayCommands {
 
 	@Reference
 	private GatewayServiceDB gatewayServiceDB;
-	
+
 	SimpleDateFormat form = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
 	public void add(String mac, String ip, String manufacturer, String hostName) {
 		Gateway gateway = new Gateway(mac, ip, manufacturer, hostName, true, Calendar.getInstance());
-		gatewayServiceDB.add(gateway);		
+		gatewayServiceDB.add(gateway);
 	}
 
 	public void update(String mac, String ip, String manufacturer, String hostName, boolean status) {
 		Calendar date = Calendar.getInstance();
-		
+
 		if (gatewayServiceDB.find(mac) != null) {
 			Gateway gateway = new Gateway(mac, ip, manufacturer, hostName, status, date);
 			gatewayServiceDB.update(gateway);
@@ -51,9 +51,10 @@ public class GatewayCommands {
 
 		if (gateway != null) {
 			System.out.println("--------- Information Found ---------");
-			System.out.println("MAC, IP, MANUFACTURER, HOSTNAME, STATUS, UPDATE");
-			System.out.println(gateway.getMac() + ", " + gateway.getIp() + ", " + gateway.getManufacturer() + ", "
-					+ gateway.getHostName() + ", " + gateway.isStatus() + ", " + form.format(gateway.getDate().getTime()));
+			System.out.println("MAC\tIP\tMANUFACTURER\tHOSTNAME\tSTATUS\tUPDATE");
+			System.out.println(gateway.getMac() + "\t" + gateway.getIp() + "\t" + gateway.getManufacturer() + "\t"
+					+ gateway.getHostName() + "\t" + gateway.isStatus() + "\t"
+					+ form.format(gateway.getDate().getTime()));
 		} else {
 			System.out.println("Register not found");
 		}
@@ -64,10 +65,11 @@ public class GatewayCommands {
 
 		if (!listGateway.isEmpty()) {
 			System.out.println("--------- List of Gateways ---------");
-			System.out.println("MAC, IP, MANUFACTURER, HOSTNAME, STATUS, UPDATE");
+			System.out.println("MAC\tIP\tMANUFACTURER\tHOSTNAME\tSTATUS\tUPDATE");
 			for (Gateway gateway : listGateway) {
-				System.out.println(gateway.getMac() + ", " + gateway.getIp() + ", " + gateway.getManufacturer() + ", "
-						+ gateway.getHostName() + ", " + gateway.isStatus() + ", " + form.format(gateway.getDate().getTime()));
+				System.out.println(gateway.getMac() + "\t" + gateway.getIp() + "\t" + gateway.getManufacturer() + "\t"
+						+ gateway.getHostName() + "\t" + gateway.isStatus() + "\t"
+						+ form.format(gateway.getDate().getTime()));
 			}
 		} else {
 			System.out.println("No information stored");

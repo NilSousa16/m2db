@@ -34,10 +34,11 @@ public class GatewayStatusCommands {
 
 		if (!listGatewayStatusByMac.isEmpty()) {
 			System.out.println("--------- List of Gateways Status ---------");
-			System.out.println("Mac, BaterryLevel, UsedMemory, UsedProcessor, TimeStamp");
+			System.out.println("Mac\tBaterryLevel\tUsedMemory\tUsedProcessor\tTimeStamp");
 			for (GatewayStatus gatewayStatus : listGatewayStatusByMac) {
-				System.out.println(gatewayStatus.getGateway().getMac() + ", " + gatewayStatus.getBaterryLevel() + ", " + gatewayStatus.getUsedMemory() + ", "
-						+ gatewayStatus.getUsedProcessor() + ", " + form.format(gatewayStatus.getDate().getTime()));
+				System.out.println(gatewayStatus.getGateway().getMac() + "\t" + gatewayStatus.getBaterryLevel() + "\t"
+						+ gatewayStatus.getUsedMemory() + "\t" + gatewayStatus.getUsedProcessor() + "\t"
+						+ form.format(gatewayStatus.getDate().getTime()));
 
 			}
 		} else {
@@ -50,10 +51,11 @@ public class GatewayStatusCommands {
 
 		if (!listGatewayStatus.isEmpty()) {
 			System.out.println("--------- List of Gateways Status ---------");
-			System.out.println("Mac, BaterryLevel, UsedMemory, UsedProcessor, TimeStamp");
+			System.out.println("Mac\tBaterryLevel\tUsedMemory\tUsedProcessor\tTimeStamp");
 			for (GatewayStatus gatewayStatus : listGatewayStatus) {
-				System.out.println(gatewayStatus.getGateway().getMac() + ", " + gatewayStatus.getBaterryLevel() + ", " + gatewayStatus.getUsedMemory() + ", "
-						+ gatewayStatus.getUsedProcessor() + ", " + form.format(gatewayStatus.getDate().getTime()));
+				System.out.println(gatewayStatus.getGateway().getMac() + "\t" + gatewayStatus.getBaterryLevel() + "\t"
+						+ gatewayStatus.getUsedMemory() + "\t" + gatewayStatus.getUsedProcessor() + "\t"
+						+ form.format(gatewayStatus.getDate().getTime()));
 
 			}
 		} else {

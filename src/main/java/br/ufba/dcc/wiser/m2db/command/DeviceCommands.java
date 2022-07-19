@@ -84,9 +84,9 @@ public class DeviceCommands {
 					"IDDEVICE\tLOCATION\tDESCRIPTION\tTYPESENSOR\tSTATUS\tTIMESTAMP\tGATEWAY"
 			);
 			System.out.println(
-					device.getId() + " \t " + device.getLocation() + " \t " + 
-					device.getDescription() + " \t " + device.getTypeSensor() + " \t " + 
-					device.getStatus() + " \t " + form.format(device.getDate().getTime()) + " \t " + 
+					device.getId() + "\t" + device.getLocation() + "\t" + 
+					device.getDescription() + "\t" + device.getTypeSensor() + "\t" + 
+					device.getStatus() + "\t" + form.format(device.getDate().getTime()) + "\t" + 
 					device.getGateway().getMac()
 			);
 			
@@ -105,9 +105,9 @@ public class DeviceCommands {
 			);
 			for (Device device : deviceGateway) {
 				System.out.println(
-						device.getId() + " \t " + device.getLocation() + " \t " + 
-						device.getDescription() + " \t " + device.getTypeSensor() + " \t " + 
-						device.getStatus() + " \t " + form.format(device.getDate().getTime()) + " \t " + 
+						device.getId() + "\t" + device.getLocation() + "\t" + 
+						device.getDescription() + "\t" + device.getTypeSensor() + "\t" + 
+						device.getStatus() + "\t" + form.format(device.getDate().getTime()) + "\t" + 
 						device.getGateway().getMac()
 				);
 			}
