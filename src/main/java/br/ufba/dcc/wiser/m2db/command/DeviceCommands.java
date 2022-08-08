@@ -14,19 +14,10 @@ import br.ufba.dcc.wiser.m2model.model.Device;
 		"osgi.command.scope=fot-device", "osgi.command.function=add",
 		"osgi.command.function=update", "osgi.command.function=delete", 
 		"osgi.command.function=find",
+		"osgi.command.function=listByGateway",
 		"osgi.command.function=listDevices" 
 	})
 public class DeviceCommands {
-	
-	/*
-	 * Para o git: m2server / m2db
-	 * 
-		fot-device:add - ok
-		fot-device:update - error (java.lang.NullPointerException)
-		fot-device:delete - ok
-		fot-device:find - ok
-		fot-device:list - ok
-	 */
 	
 	@Reference
 	private DeviceServiceDB deviceServiceDB;
@@ -92,6 +83,28 @@ public class DeviceCommands {
 			
 		} else {
 			System.out.println("Device register not found");
+		}
+	}
+	
+	public void listByGateway(String gatewayMac) {
+		List<Device> deviceGateway = deviceServiceDB.listByGateway(gatewayMac);
+		
+		if (!deviceGateway.isEmpty()) {
+			System.out.println("--------- List of Devices ---------");
+			System.out.println(
+					"IDDEVICE\tLOCATION\tDESCRIPTION\tTYPESENSOR\tSTATUS\tTIMESTAMP\tGATEWAY"
+			);
+			for (Device device : deviceGateway) {
+				System.out.println(
+						device.getId() + "\t" + device.getLocation() + "\t" + 
+						device.getDescription() + "\t" + device.getTypeSensor() + "\t" + 
+						device.getStatus() + "\t" + form.format(device.getDate().getTime()) + "\t" + 
+						device.getGateway().getMac()
+				);
+			}
+			
+		} else {
+			System.out.println("No information stored");
 		}
 	}
 

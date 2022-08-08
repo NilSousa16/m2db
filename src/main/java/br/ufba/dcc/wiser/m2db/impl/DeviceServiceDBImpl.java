@@ -69,8 +69,16 @@ public class DeviceServiceDBImpl implements DeviceServiceDB {
 	}
 
 	@Override
+	public List<Device> listByGateway(String gatewayMac) {
+		return jpa.txExpr(
+				em -> em.createQuery("select d from Device d where d.gateway.mac = :gatewayMac", Device.class)
+						.setParameter("gatewayMac", gatewayMac).getResultList()
+		);
+	}
+	
+	@Override
 	public List<Device> list() {
 		return jpa.txExpr(em -> em.createQuery("select d from Device d", Device.class).getResultList());
 	}
-
+	
 }

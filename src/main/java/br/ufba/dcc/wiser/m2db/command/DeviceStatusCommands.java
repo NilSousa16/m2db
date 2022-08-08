@@ -15,6 +15,7 @@ import br.ufba.dcc.wiser.m2model.model.DeviceStatus;
 		"osgi.command.scope=fot-device-status",
 		"osgi.command.function=add", 
 		"osgi.command.function=findById", 
+		"osgi.command.function=findByGateway",
 		"osgi.command.function=getListAll" })
 public class DeviceStatusCommands {
 
@@ -38,6 +39,21 @@ public class DeviceStatusCommands {
 			System.out.println("--------- List of Devices Status ---------");
 			System.out.println("IDDEVICE\tSITUATION\tTIMESTAMP");
 			for (DeviceStatus deviceStatus : listDeviceStatusById) {
+				System.out.println(deviceStatus.getDevice().getId() + "\t" + deviceStatus.getSituation() + "\t"
+						+ form.format(deviceStatus.getDate().getTime()));
+			}
+		} else {
+			System.out.println("No information stored");
+		}
+	}
+	
+	public void findByGateway(String gatewayMac) {
+		List<DeviceStatus> listDeviceStatusByGateway = deviceStatusServiceDB.findByGateway(gatewayMac);
+
+		if (!listDeviceStatusByGateway.isEmpty()) {
+			System.out.println("--------- List of Devices Status ---------");
+			System.out.println("IDDEVICE\tSITUATION\tTIMESTAMP");
+			for (DeviceStatus deviceStatus : listDeviceStatusByGateway) {
 				System.out.println(deviceStatus.getDevice().getId() + "\t" + deviceStatus.getSituation() + "\t"
 						+ form.format(deviceStatus.getDate().getTime()));
 			}

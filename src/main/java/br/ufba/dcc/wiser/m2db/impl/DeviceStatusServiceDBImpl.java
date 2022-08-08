@@ -42,6 +42,14 @@ public class DeviceStatusServiceDBImpl implements DeviceStatusServiceDB{
 	}
 
 	@Override
+	public List<DeviceStatus> findByGateway(String gatewayMac) {
+		return jpa.txExpr(
+				em -> em.createQuery("select d from DeviceStatus d where d.device.gateway.mac = :gatewayMac", DeviceStatus.class)
+						.setParameter("gatewayMac", gatewayMac).getResultList()
+		);
+	}
+	
+	@Override
 	public List<DeviceStatus> getListAll() {
 		return jpa.txExpr(em -> em.createQuery("select d from DeviceStatus d", DeviceStatus.class).getResultList());
 	}

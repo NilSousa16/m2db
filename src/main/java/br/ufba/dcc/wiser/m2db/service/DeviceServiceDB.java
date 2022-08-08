@@ -13,6 +13,8 @@ public interface DeviceServiceDB {
 	void delete(String id);
 
 	Device find(String id);
+	
+	List<Device> listByGateway(String gatewayMac);
 
 	List<Device> list();
 	

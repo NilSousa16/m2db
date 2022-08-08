@@ -9,6 +9,8 @@ public interface DeviceStatusServiceDB {
 	void add(DeviceStatus deviceStatus);
 
 	List<DeviceStatus> findById(String id);
+	
+	List<DeviceStatus> findByGateway(String gatewayMac);
 
 	List<DeviceStatus> getListAll();
 

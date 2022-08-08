@@ -23,7 +23,7 @@ public class GatewayStatusCommands {
 
 	SimpleDateFormat form = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
-	public void add(String mac, double baterryLevel, long usedMemory, double usedProcessor) {
+	public void add(String mac, double baterryLevel, double usedMemory, double usedProcessor) {
 		GatewayStatus gatewayStatus = new GatewayStatus(mac, baterryLevel, usedMemory, usedProcessor,
 				Calendar.getInstance());
 		gatewayStatusServiceDB.add(gatewayStatus);
