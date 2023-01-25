@@ -300,7 +300,6 @@ public class InsertData {
 		 * Device Status
 		 */
 		
-		
 
 	}
 
