@@ -36,7 +36,7 @@ public class DataGenerator {
 
 	SimpleDateFormat form = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
-	public void dataGenerator() throws InterruptedException {
+	public void dataGenerator(int totalGateway, int totalGatewayStatus, int totalDevice, int totalDeviceStatus) throws InterruptedException {
 
 		Random random = new Random();
 		Device device = new Device();
@@ -48,10 +48,10 @@ public class DataGenerator {
 		/*
 		 * Configuration for data generation
 		 */
-		final int TOTAL_GATEWAY = 50;
-		final int TOTAL_GATEWAY_STATUS = 50;
-		final int TOTAL_DEVICE = 500;
-		final int TOTAL_DEVICE_STATUS = 100;
+		final int TOTAL_GATEWAY = totalGateway;
+		final int TOTAL_GATEWAY_STATUS = totalGatewayStatus;
+		final int TOTAL_DEVICE = totalDevice;
+		final int TOTAL_DEVICE_STATUS = totalDeviceStatus;
 
 		/**
 		 * Gateways
@@ -82,7 +82,12 @@ public class DataGenerator {
 			gateway.setDate(Calendar.getInstance());
 			gateway.setSolution(smartSolutionList[random.nextInt(8)]);
 			gateway.setCoordinates("57.0030, 86.2199");
-			gatewayServiceDB.add(gateway);
+			
+			try {
+				gatewayServiceDB.add(gateway);
+			} catch (Exception e) {
+				System.out.println("Gateway insertion failed: " + gateway.getMac());
+			}	
 		}
 
 		/**
@@ -112,7 +117,12 @@ public class DataGenerator {
 			gateway = new Gateway();
 			gateway.setMac(gatewayIdList.get(random.nextInt(gatewayIdList.size())));
 			device.setGateway(gateway);
-			deviceServiceDB.add(device);
+			
+			try {
+				deviceServiceDB.add(device);
+			} catch (Exception e) {
+				System.out.println("Device insertion failed: " + device.getId());
+			}			
 		}
 
 		/**
@@ -150,6 +160,8 @@ public class DataGenerator {
 			}
 
 		}
+		
+		System.out.println(">>> Completed data entry");
 
 	}
 
