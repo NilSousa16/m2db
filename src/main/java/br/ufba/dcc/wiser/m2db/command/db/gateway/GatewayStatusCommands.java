@@ -1,4 +1,4 @@
-package br.ufba.dcc.wiser.m2db.command;
+package br.ufba.dcc.wiser.m2db.command.db.gateway;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -11,7 +11,7 @@ import br.ufba.dcc.wiser.m2db.service.GatewayServiceDB;
 import br.ufba.dcc.wiser.m2db.service.GatewayStatusServiceDB;
 import br.ufba.dcc.wiser.m2model.model.GatewayStatus;
 
-@Component(service = GatewayStatusCommands.class, property = { "osgi.command.scope=fot-gateway-status",
+@Component(service = GatewayStatusCommands.class, property = { "osgi.command.scope=fot-gateway-status-db",
 		"osgi.command.function=add", "osgi.command.function=findByMac", "osgi.command.function=getListAll" })
 public class GatewayStatusCommands {
 
@@ -34,12 +34,15 @@ public class GatewayStatusCommands {
 
 		if (!listGatewayStatusByMac.isEmpty()) {
 			System.out.println("--------- List of Gateways Status ---------");
-			System.out.println("Mac\tBaterryLevel\tUsedMemory\tUsedProcessor\tTimeStamp");
+			System.out.printf("%-20s %-15s %-15s %-15s %-20s%n", "Mac", "BatteryLevel", "UsedMemory", "UsedProcessor", "TimeStamp");
 			for (GatewayStatus gatewayStatus : listGatewayStatusByMac) {
-				System.out.println(gatewayStatus.getGateway().getMac() + "\t" + gatewayStatus.getBaterryLevel() + "\t"
-						+ gatewayStatus.getUsedMemory() + "\t" + gatewayStatus.getUsedProcessor() + "\t"
-						+ form.format(gatewayStatus.getDate().getTime()));
-
+				System.out.printf("%-20s %-15s %-15s %-15s %-20s%n", 
+				        gatewayStatus.getGateway().getMac(), 
+				        gatewayStatus.getBaterryLevel(), 
+				        gatewayStatus.getUsedMemory(), 
+				        gatewayStatus.getUsedProcessor(), 
+				        form.format(gatewayStatus.getDate().getTime())
+				    );
 			}
 		} else {
 			System.out.println("No information stored");
@@ -51,12 +54,16 @@ public class GatewayStatusCommands {
 
 		if (!listGatewayStatus.isEmpty()) {
 			System.out.println("--------- List of Gateways Status ---------");
-			System.out.println("Mac\tBaterryLevel\tUsedMemory\tUsedProcessor\tTimeStamp");
+			System.out.printf("%-20s %-15s %-15s %-15s %-20s%n", 
+			    "Mac", "BatteryLevel", "UsedMemory", "UsedProcessor", "TimeStamp");
 			for (GatewayStatus gatewayStatus : listGatewayStatus) {
-				System.out.println(gatewayStatus.getGateway().getMac() + "\t" + gatewayStatus.getBaterryLevel() + "\t"
-						+ gatewayStatus.getUsedMemory() + "\t" + gatewayStatus.getUsedProcessor() + "\t"
-						+ form.format(gatewayStatus.getDate().getTime()));
-
+				System.out.printf("%-20s %-15s %-15s %-15s %-20s%n", 
+				        gatewayStatus.getGateway().getMac(), 
+				        gatewayStatus.getBaterryLevel(), 
+				        gatewayStatus.getUsedMemory(), 
+				        gatewayStatus.getUsedProcessor(), 
+				        form.format(gatewayStatus.getDate().getTime())
+				    );
 			}
 		} else {
 			System.out.println("No information stored");

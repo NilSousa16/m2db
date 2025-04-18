@@ -1,4 +1,4 @@
-package br.ufba.dcc.wiser.m2db.command;
+package br.ufba.dcc.wiser.m2db.command.db.device;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -12,7 +12,7 @@ import br.ufba.dcc.wiser.m2db.service.DeviceStatusServiceDB;
 import br.ufba.dcc.wiser.m2model.model.DeviceStatus;
 
 @Component(service = DeviceStatusCommands.class, property = { 
-		"osgi.command.scope=fot-device-status",
+		"osgi.command.scope=fot-device-status-db",
 		"osgi.command.function=add", 
 		"osgi.command.function=findById", 
 		"osgi.command.function=findByGateway",

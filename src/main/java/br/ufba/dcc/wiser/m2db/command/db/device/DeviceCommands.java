@@ -1,4 +1,4 @@
-package br.ufba.dcc.wiser.m2db.command;
+package br.ufba.dcc.wiser.m2db.command.db.device;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -9,8 +9,9 @@ import org.osgi.service.component.annotations.Reference;
 
 import br.ufba.dcc.wiser.m2db.service.DeviceServiceDB;
 import br.ufba.dcc.wiser.m2model.model.Device;
+import br.ufba.dcc.wiser.m2model.model.utils.Coordinates;
 
-@Component(service = DeviceCommands.class, property = { "osgi.command.scope=fot-device", "osgi.command.function=add",
+@Component(service = DeviceCommands.class, property = { "osgi.command.scope=fot-device-db", "osgi.command.function=add",
 		"osgi.command.function=update", "osgi.command.function=delete", "osgi.command.function=find",
 		"osgi.command.function=listByGateway", "osgi.command.function=listDevices" })
 public class DeviceCommands {
@@ -20,11 +21,10 @@ public class DeviceCommands {
 
 	SimpleDateFormat form = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
-	public void add(String id, String location, String description, String typeDevice, String category, Boolean status,
-			String macGateway) {
-		Device device = new Device(location, description, typeDevice, category, status, Calendar.getInstance(),
+	public void add(String id, Coordinates coordinates, String description, String typeDevice, String category,
+			Boolean status, String macGateway) {
+		Device device = new Device(id, coordinates, description, typeDevice, category, status, Calendar.getInstance(),
 				macGateway);
-		device.setId(id);
 		deviceServiceDB.add(device);
 	}
 
@@ -37,7 +37,7 @@ public class DeviceCommands {
 			Device device = new Device();
 
 			device.setId(id);
-			device.setLocation(location);
+			device.setCoordinates(null);
 			device.setDate(date);
 			device.setStatus(status);
 			// typeSensor and description not included because never change
@@ -69,10 +69,11 @@ public class DeviceCommands {
 
 		if (device != null) {
 			System.out.println("--------- Information Found ---------");
-			System.out.println("IDDEVICE\tLOCATION\tDESCRIPTION\tTYPEDEVICE\tCATEGORY\tSTATUS\tTIMESTAMP\tGATEWAY");
-			System.out.println(device.getId() + "\t" + device.getLocation() + "\t" + device.getDescription() + "\t"
-					+ device.getTypeDevice() + "\t" + device.getCategory() + "\t" + device.getStatus() + "\t"
-					+ form.format(device.getDate().getTime()) + "\t" + device.getGateway().getMac());
+			System.out.printf("%-10s %-15s %-20s %-15s %-15s %-10s %-20s %-15s%n", "IDDEVICE", "LOCATION",
+					"DESCRIPTION", "TYPEDEVICE", "CATEGORY", "STATUS", "TIMESTAMP", "GATEWAY");
+			System.out.printf("%-10s %-15s %-20s %-15s %-15s %-10s %-20s %-15s%n", device.getId(),
+					device.getCoordinates(), device.getDescription(), device.getTypeDevice(), device.getCategory(),
+					device.getStatus(), form.format(device.getDate().getTime()), device.getGateway().getMac());
 
 		} else {
 			System.out.println("Device register not found");
@@ -84,11 +85,12 @@ public class DeviceCommands {
 
 		if (!deviceGateway.isEmpty()) {
 			System.out.println("--------- List of Devices ---------");
-			System.out.println("IDDEVICE\tLOCATION\tDESCRIPTION\tTYPEDEVICE\tCATEGORY\tSTATUS\tTIMESTAMP\tGATEWAY");
+			System.out.printf("%-10s %-15s %-15s %-12s %-12s %-8s %-20s %-10s%n", "IDDEVICE", "LOCATION", "DESCRIPTION",
+					"TYPEDEVICE", "CATEGORY", "STATUS", "TIMESTAMP", "GATEWAY");
 			for (Device device : deviceGateway) {
-				System.out.println(device.getId() + "\t" + device.getLocation() + "\t" + device.getDescription() + "\t"
-						+ device.getTypeDevice() + "\t" + device.getCategory() + "\t" + device.getStatus() + "\t"
-						+ form.format(device.getDate().getTime()) + "\t" + device.getGateway().getMac());
+				System.out.printf("%-10s %-15s %-15s %-12s %-12s %-8s %-20s %-10s%n", device.getId(),
+						device.getCoordinates(), device.getDescription(), device.getTypeDevice(), device.getCategory(),
+						device.getStatus(), form.format(device.getDate().getTime()), device.getGateway().getMac());
 			}
 		} else {
 			System.out.println("No information stored");
@@ -99,12 +101,13 @@ public class DeviceCommands {
 		List<Device> deviceGateway = deviceServiceDB.list();
 
 		if (!deviceGateway.isEmpty()) {
-			System.out.println("--------- List of Devices ---------");
-			System.out.println("IDDEVICE\tLOCATION\tDESCRIPTION\tTYPEDEVICE\tCATEGORY\tSTATUS\tTIMESTAMP\tGATEWAY");
+			System.out.println("--------- List of Devices ---------\n");
+			System.out.printf("%-10s %-15s %-20s %-12s %-12s %-8s %-20s %-15s%n", "IDDEVICE", "LOCATION", "DESCRIPTION",
+					"TYPEDEVICE", "CATEGORY", "STATUS", "TIMESTAMP", "GATEWAY");
 			for (Device device : deviceGateway) {
-				System.out.println(device.getId() + "\t" + device.getLocation() + "\t" + device.getDescription() + "\t"
-						+ device.getTypeDevice() + "\t" + device.getCategory() + "\t" + device.getStatus() + "\t"
-						+ form.format(device.getDate().getTime()) + "\t" + device.getGateway().getMac());
+				System.out.printf("%-10s %-15s %-20s %-12s %-12s %-8s %-20s %-15s%n", device.getId(),
+						device.getCoordinates(), device.getDescription(), device.getTypeDevice(), device.getCategory(),
+						device.getStatus(), form.format(device.getDate().getTime()), device.getGateway().getMac());
 			}
 		} else {
 			System.out.println("No information stored");
